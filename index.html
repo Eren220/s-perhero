@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Süper Kahraman Savaş Oyunu</title>
+  <style>
+    body {
+      margin: 0;
+      background: #111;
+      color: white;
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    h1 {
+      margin: 20px;
+    }
+    canvas {
+      border: 2px solid #fff;
+      background-color: #222;
+    }
+    p {
+      font-size: 14px;
+      color: #ccc;
+    }
+  </style>
+</head>
+<body>
+  <h1>🦸 Süper Kahraman Savaş Oyunu</h1>
+  <canvas id="gameCanvas" width="800" height="400"></canvas>
+  <p>Boşluk tuşuna basarak zıpla!</p>
+
+  <script>
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // Karakter
+    const hero = {
+      x: 50,
+      y: 300,
+      width: 50,
+      height: 50,
+      color: 'blue',
+      isJumping: false,
+      velocityY: 0,
+    };
+
+    const gravity = 1;
+    const ground = 300;
+
+    const enemies = [];
+    function spawnEnemy() {
+      enemies.push({ x: 800, y: 300, width: 50, height: 50, color: 'red' });
+    }
+    setInterval(spawnEnemy, 2000);
+
+    function gameLoop() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Kahraman
+      ctx.fillStyle = hero.color;
+      ctx.fillRect(hero.x, hero.y, hero.width, hero.height);
+
+      // Zıplama
+      if (hero.isJumping) {
+        hero.velocityY -= gravity;
+        hero.y -= hero.velocityY;
+        if (hero.y >= ground) {
+          hero.y = ground;
+          hero.isJum
